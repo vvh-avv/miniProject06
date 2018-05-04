@@ -118,17 +118,12 @@ function stateSubmit(){
 
 	<div style="width: 98%; margin-left: 10px;">
 
-		<form name="detailForm"
-			action="/listProduct.do?menu=${param.menu=='manage'?'manage':'search'}"
-			method="post">
+		<form name="detailForm" action="/listProduct.do?menu=${param.menu=='manage'?'manage':'search'}" method="post">
 
-			<table width="100%" height="37" border="0" cellpadding="0"
-				cellspacing="0">
+			<table width="100%" height="37" border="0" cellpadding="0" cellspacing="0">
 				<tr>
-					<td width="15" height="37"><img src="/images/ct_ttl_img01.gif"
-						width="15" height="37" /></td>
-					<td background="/images/ct_ttl_img02.gif" width="100%"
-						style="padding-left: 10px;">
+					<td width="15" height="37"><img src="/images/ct_ttl_img01.gif" width="15" height="37" /></td>
+					<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left: 10px;">
 						<table width="100%" border="0" cellspacing="0" cellpadding="0">
 							<tr>
 								<c:if test="${param.menu=='manage'}">
@@ -140,37 +135,35 @@ function stateSubmit(){
 							</tr>
 						</table>
 					</td>
-					<td width="12" height="37"><img src="/images/ct_ttl_img03.gif"
-						width="12" height="37" /></td>
+					<td width="12" height="37"><img src="/images/ct_ttl_img03.gif" width="12" height="37" /></td>
 				</tr>
 			</table>
 
 
-			<table width="100%" border="0" cellspacing="0" cellpadding="0"
-				style="margin-top: 10px;">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;">
 				<tr>
 
 					<!-- 서치할 데이터 입력값이 존재하는 경우 -->
 					<c:if test="${!empty search.searchCondition }">
-						<td align="right"><select name="searchCondition"
-							class="ct_input_g" style="width: 80px">
+						<td align="right">
+						<select name="searchCondition" class="ct_input_g" style="width: 80px">
 								<!-- 어드민로 접속했을 경우에만 검색조건에 상품번호를 노출시키겠다  -->
 								<c:if test="${!empty user && user.role=='admin'}">
-									<option value="-1"
-										${search.searchCondition=='-1'?"selected":""}>주문번호</option>
+									<option value="-1" ${search.searchCondition=='-1'?"selected":""}>주문번호</option>
 									<option value="0" ${search.searchCondition=='0'?"selected":""}>상품번호</option>
 								</c:if>
 								<option value="1" ${search.searchCondition=='1'?"selected":""}>상품명</option>
 								<option value="2" ${search.searchCondition=='2'?"selected":""}>상품가격</option>
-						</select> <input type="text" name="searchKeyword" class="ct_input_g"
-							style="width: 200px; height: 19px" value="${param.searchKeyword}">
+						</select>
+						<input type="text" name="searchKeyword" onkeypress="javascript:if(event.keyCode==13) fncGetList('1');" class="ct_input_g"
+													style="width: 200px; height: 19px" value="${param.searchKeyword}">
 						</td>
 					</c:if>
 
 					<!-- 서치할 데이터 입력값이 존재하지 않는 경우 -->
 					<c:if test="${empty search.searchCondition }">
-						<td align="right"><select name="searchCondition"
-							class="ct_input_g" style="width: 80px">
+						<td align="right">
+						<select name="searchCondition" class="ct_input_g" style="width: 80px">
 								<!-- 어드민로 접속했을 경우에만 검색조건에 상품번호를 노출시키겠다  -->
 								<c:if test="${!empty user && user.role=='admin'}">
 									<option value="-1">주문번호</option>
@@ -178,20 +171,17 @@ function stateSubmit(){
 								</c:if>
 								<option value="1">상품명</option>
 								<option value="2">상품가격</option>
-						</select> <input type="text" name="searchKeyword" class="ct_input_g"
-							style="width: 200px; height: 19px"></td>
+						</select>
+						<input type="text" name="searchKeyword" class="ct_input_g" style="width: 200px; height: 19px"></td>
 					</c:if>
 
 					<td align="right" width="70">
 						<table border="0" cellspacing="0" cellpadding="0">
 							<tr>
-								<td width="17" height="23"><img
-									src="/images/ct_btnbg01.gif" width="17" height="23"></td>
-								<td background="/images/ct_btnbg02.gif" class="ct_btn01"
-									style="padding-top: 3px;"><a
-									href="javascript:fncGetList('1');">검색</a></td>
-								<td width="14" height="23"><img
-									src="/images/ct_btnbg03.gif" width="14" height="23"></td>
+								<td width="17" height="23"><img src="/images/ct_btnbg01.gif" width="17" height="23"></td>
+								<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
+									<a href="javascript:fncGetList('1');">검색</a></td>
+								<td width="14" height="23"><img src="/images/ct_btnbg03.gif" width="14" height="23"></td>
 							</tr>
 						</table>
 					</td>
@@ -199,11 +189,9 @@ function stateSubmit(){
 			</table>
 
 
-			<table width="100%" border="0" cellspacing="0" cellpadding="0"
-				style="margin-top: 10px;">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;">
 				<tr>
-					<td colspan="13">전체 ${resultPage.totalCount} 건수, 현재
-						${resultPage.currentPage} 페이지</td>
+					<td colspan="13">전체 ${resultPage.totalCount} 건수, 현재 ${resultPage.currentPage} 페이지</td>
 				</tr>
 
 				<!-- 0420 체크박스 추가 -->
@@ -212,12 +200,14 @@ function stateSubmit(){
 						<td>&nbsp;</td>
 					</tr>
 					<tr>
-						<td colspan="13" align="right">선택한 상품을 <select
-							class="condition" name="condition">
+						<td colspan="13" align="right"> 선택한 상품을
+							<select class="condition" name="condition">
 								<option value="배송중">배송중</option>
 								<option value="반품처리">반품처리</option>
 								<option value="반품거절">반품거절</option>
-						</select> &nbsp; <input type="button" value="처리" onclick="stateSubmit();">
+							</select>
+							&nbsp;
+							<input type="button" value="처리" onclick="stateSubmit();">
 						</td>
 					</tr>
 					<tr>
@@ -228,10 +218,9 @@ function stateSubmit(){
 
 				<tr>
 					<td class="ct_list_b" width="100">
-						<!-- 0420 체크박스 추가 --> <c:if
-							test="${!empty sessionScope.user && user.role=='admin' }">
-							<input type="checkbox" name="prodListAll" value="prodAll"
-								onclick="allChk(this);">
+						<!-- 0420 체크박스 추가 -->
+						<c:if test="${!empty sessionScope.user && user.role=='admin' }">
+							<input type="checkbox" name="prodListAll" value="prodAll" onclick="allChk(this);">
 						</c:if> No
 
 					</td>
@@ -243,27 +232,21 @@ function stateSubmit(){
 						<td class="ct_line02"></td>
 					</c:if>
 
-					<td class="ct_list_b" width="150">상품명 <c:if
-							test="${requestScope.sort=='prod_no asc' || sort=='prod_name asc' || sort=='price asc' || sort=='price desc'}">
-							<a
-								onclick="location.href='/listProduct.do?sort=prod_name+desc&menu=${param.menu}';"
-								style="cursor: pointer"> ↓ </a>
-						</c:if> <c:if test="${requestScope.sort=='prod_name desc'}">
-							<a
-								onclick="location.href='/listProduct.do?sort=prod_name+asc&menu=${param.menu}';"
-								style="cursor: pointer"> ↑ </a>
+					<td class="ct_list_b" width="150">상품명
+						<c:if test="${requestScope.sort=='prod_no asc' || sort=='prod_name asc' || sort=='price asc' || sort=='price desc'}">
+							<a onclick="location.href='/listProduct.do?sort=prod_name+desc&menu=${param.menu}';" style="cursor: pointer"> ↓ </a>
+						</c:if>
+						<c:if test="${requestScope.sort=='prod_name desc'}">
+							<a onclick="location.href='/listProduct.do?sort=prod_name+asc&menu=${param.menu}';" style="cursor: pointer"> ↑ </a>
 						</c:if>
 					</td>
 					<td class="ct_line02"></td>
-					<td class="ct_list_b" width="150">가격 <c:if
-							test="${requestScope.sort=='prod_no asc' || sort=='price asc' || sort=='prod_name asc' || sort=='prod_name desc'}">
-							<a
-								onclick="location.href='/listProduct.do?sort=price+desc&menu=${param.menu}';"
-								style="cursor: pointer"> ↓ </a>
-						</c:if> <c:if test="${requestScope.sort=='price desc'}">
-							<a
-								onclick="location.href='/listProduct.do?sort=price+asc&menu=${param.menu}';"
-								style="cursor: pointer"> ↑ </a>
+					<td class="ct_list_b" width="150">가격
+						<c:if test="${requestScope.sort=='prod_no asc' || sort=='price asc' || sort=='prod_name asc' || sort=='prod_name desc'}">
+							<a onclick="location.href='/listProduct.do?sort=price+desc&menu=${param.menu}';" style="cursor: pointer"> ↓ </a>
+						</c:if>
+						<c:if test="${requestScope.sort=='price desc'}">
+							<a onclick="location.href='/listProduct.do?sort=price+asc&menu=${param.menu}';" style="cursor: pointer"> ↑ </a>
 						</c:if>
 
 					</td>

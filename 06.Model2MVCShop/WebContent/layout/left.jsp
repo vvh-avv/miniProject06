@@ -53,8 +53,7 @@ function history(){
 				<td valign="top">
 					<table border="0" cellspacing="0" cellpadding="0" width="159">
 						<tr>
-							<td class="Depth03"><a href="../product/addProductView.jsp;"
-								target="rightFrame">판매상품등록</a></td>
+							<td class="Depth03"><a href="/product/addProductView.jsp" target="rightFrame">판매상품등록</a></td>
 						</tr>
 						<tr>
 							<td class="Depth03"><a href="/listProduct.do?menu=manage"

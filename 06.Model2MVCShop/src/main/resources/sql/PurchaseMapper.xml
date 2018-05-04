@@ -19,6 +19,7 @@
 		
 		<association property="purchaseProd"  javaType="product">
 			<id property="prodNo" column="prod_no" jdbcType="NUMERIC"/>
+			<id property="prodName" column="prod_name" jdbcType="VARCHAR"/>
 		</association>
 		
 		<association property="buyer"  javaType="user">
@@ -36,7 +37,7 @@
 		SELECT
 		tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date
 		FROM transaction
-		WHERE tran_no = #{value}
+		WHERE tran_no = #{value} OR prod_no = #{value}
 	</select>
 
 	<update id="updatePurchase" parameterType="purchase">
@@ -51,55 +52,45 @@
 		WHERE tran_no=#{tranNo}
 	</update>
 
-	<sql id="get-purchase-list">
-		<if test="search.searchCondition!=null and search.searchKeyword!=''">
-			<if test="search.searchCondition==0"> <!-- 상품명 -->
-				SELECT t.*
-				FROM transaction t, product p
-				WHERE t.prod_no = p.prod_no AND p.prod_name LIKE #{search.searchKeyword}
-			</if>
-			<if test="search.searchCondition==1"> <!-- 주문번호 --> <!-- 뷰처리해야함 -->
-				SELECT t.*
-				FROM transaction t, product p
-				WHERE t.prod_no = p.prod_no AND t.tran_no = #{search.searchKeyword}
-			</if>
-		</if>
-		<if test="search.searchCondition==null or search.searchKeyword==''">
-			SELECT
-			tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date
-			FROM transaction
-			WHERE buyer_id=#{buyerId}
-		</if>
-		ORDER BY tran_no ${sort}
-	</sql>
 
 	<select id="getPurchaseList" parameterType="map" resultMap="purchaseMap">
 		SELECT *
 	 	FROM ( 	SELECT inner_table.*, ROWNUM AS row_seq
-	 			  	FROM ( <include refid="get-purchase-list"/> ) inner_table
+	 			  	FROM ( 	SELECT p.prod_name, t.*
+								FROM transaction t, product p
+								WHERE t.prod_no = p.prod_no AND t.buyer_id=#{buyerId}
+								<if test="search.searchCondition!=null and search.searchKeyword!=''">
+	 			  					<if test="search.searchCondition==0"> <!-- 상품명 -->
+										 AND p.prod_name LIKE '%'||#{search.searchKeyword}||'%'
+									</if>
+									<if test="search.searchCondition==1"> <!-- 주문번호 --> <!-- 뷰처리해야함 -->
+										AND t.tran_no = #{search.searchKeyword}
+									</if>
+								</if>
+								ORDER BY tran_no ${sort} ) inner_table
 		 			WHERE <![CDATA[ROWNUM <= ${search.currentPage*search.pageSize}]]> )
 	 	WHERE row_seq BETWEEN ${(search.currentPage-1)*search.pageSize+1} AND ${search.currentPage*search.pageSize}
 	</select>
 	 
-	<select id="getTotalCount" parameterType="search" resultType="int">
+	<select id="getTotalCount" parameterType="map" resultType="int">
 		SELECT COUNT(*)
-		FROM ( <if test="searchCondition!=null and searchKeyword!=''">
-					<if test="searchCondition==0"> <!-- 상품명 -->
-						SELECT t.*
-						FROM transaction t, product p
-						WHERE t.prod_no = p.prod_no AND p.prod_name LIKE #{searchKeyword}
+		FROM ( <if test="search.searchCondition!=null and search.searchKeyword!=''">
+					SELECT t.*
+					FROM transaction t, product p
+					WHERE t.prod_no = p.prod_no
+					<if test="search.searchCondition==0"> <!-- 상품명 -->
+						AND p.prod_name LIKE '%'||#{search.searchKeyword}||'%'
 					</if>
-					<if test="searchCondition==1"> <!-- 주문번호 --> <!-- 뷰처리해야함 -->
-						SELECT t.*
-						FROM transaction t, product p
-						WHERE t.prod_no = p.prod_no AND t.tran_no = #{searchKeyword}
+					<if test="search.searchCondition==1"> <!-- 주문번호 --> <!-- 뷰처리해야함 -->
+						AND t.tran_no = #{search.searchKeyword}
 					</if>
 				  </if>
-				  <if test="searchCondition==null or searchKeyword==''">
+				  <if test="search.searchCondition==null or search.searchKeyword==''">
 					SELECT
 					tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date
 					FROM transaction
-				</if>  ) countTable
+					WHERE buyer_id=#{buyerId}
+				  </if>  ) countTable
 	</select>
 
 

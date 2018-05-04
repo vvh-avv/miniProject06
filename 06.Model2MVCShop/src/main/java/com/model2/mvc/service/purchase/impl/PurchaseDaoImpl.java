@@ -43,14 +43,18 @@ public class PurchaseDaoImpl implements PurchaseDao{
 	public List<Purchase> getPurchaseList(Search search, String buyerId, String sort) throws Exception{		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("search", search);
-		map.put("buyerId", buyerId); //Ãß°¡
+		map.put("buyerId", buyerId);
 		map.put("sort", sort);
 		
 		return sqlSession.selectList("PurchaseMapper.getPurchaseList", map);
 	}
 	
-	public int getTotalCount(Search search) throws Exception{
-		return sqlSession.selectOne("PurchaseMapper.getTotalCount", search);
+	public int getTotalCount(Search search, String buyerId) throws Exception{
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("buyerId", buyerId);
+		
+		return sqlSession.selectOne("PurchaseMapper.getTotalCount", map);
 	}
 
 	public HashMap<String, Object> getSaleList(Search search) {
