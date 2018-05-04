@@ -20,15 +20,15 @@ function fncAddUser() {
 		return;
 	}
 	if(pw == null || pw.length <1){
-		alert("패스워드는  반드시 입력하셔야 합니다.");
+		alert("패스워드는 반드시 입력하셔야 합니다.");
 		return;
 	}
 	if(pw_confirm == null || pw_confirm.length <1){
-		alert("패스워드 확인은  반드시 입력하셔야 합니다.");
+		alert("패스워드 확인은 반드시 입력하셔야 합니다.");
 		return;
 	}
 	if(name == null || name.length <1){
-		alert("이름은  반드시 입력하셔야 합니다.");
+		alert("이름은 반드시 입력하셔야 합니다.");
 		return;
 	}
 	
@@ -89,8 +89,7 @@ function PortalJuminCheck(fieldValue){
 }
 
 function fncCheckDuplication() {
-	popWin 
-		= window.open("/user/checkDuplication.jsp","popWin", "left=300,top=200,width=300,height=200,marginwidth=0,marginheight=0,scrollbars=no,scrolling=no,menubar=no,resizable=no");
+	popWin = window.open("/user/checkDuplication.jsp","popWin", "left=300,top=200,width=300,height=200,marginwidth=0,marginheight=0,scrollbars=no,scrolling=no,menubar=no,resizable=no");
 }
 
 function resetData() {

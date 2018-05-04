@@ -133,7 +133,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("/listUser.do")
-	public String listUser( @ModelAttribute("search") Search search , @RequestParam(value="sort", required=false, defaultValue="asc") String sort,
+	public String listUser( @ModelAttribute("search") Search search, @RequestParam(value="sort", required=false, defaultValue="asc") String sort,
 								Model model , HttpServletRequest request) throws Exception{
 		
 		System.out.println("/listUser.do");
@@ -142,7 +142,7 @@ public class UserController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-				
+		
 		// Business logic ผ๖วเ
 		Map<String , Object> map=userService.getUserList(search, sort);
 		

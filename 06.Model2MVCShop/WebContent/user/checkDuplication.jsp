@@ -42,13 +42,10 @@ function fncUseId() {
 	<form name="detailForm" method="post">
 
 		<!-- 타이틀 시작 -->
-		<table width="100%" height="37" border="0" cellpadding="0"
-			cellspacing="0">
+		<table width="100%" height="37" border="0" cellpadding="0" cellspacing="0">
 			<tr>
-				<td width="15" height="37"><img src="/images/ct_ttl_img01.gif"
-					width="15" height="37" /></td>
-				<td background="/images/ct_ttl_img02.gif" width="100%"
-					style="padding-left: 10px;">
+				<td width="15" height="37"><img src="/images/ct_ttl_img01.gif" width="15" height="37" /></td>
+				<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left: 10px;">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
 							<td width="93%" class="ct_ttl01">ID중복확인</td>
@@ -56,8 +53,7 @@ function fncUseId() {
 						</tr>
 					</table>
 				</td>
-				<td width="12" height="37"><img src="/images/ct_ttl_img03.gif"
-					width="12" height="37" /></td>
+				<td width="12" height="37"><img src="/images/ct_ttl_img03.gif" width="12" height="37" /></td>
 			</tr>
 		</table>
 		<!-- 타이틀 끝 -->
@@ -69,12 +65,13 @@ function fncUseId() {
 					<table width="100%" border="0" cellspacing="0" cellpadding="0"
 						style="margin-top: 3px;">
 						<tr>
-							<td width="8" style="padding-bottom: 3px;"><img
-								src="/images/ct_bot_ttl01.gif" width="4" height="7"></td>
-							<td class="ct_ttl02"><c:if test="${ ! empty result }">
-							${userId} 는 사용
-							${ result ? "" : "불" }가능 합니다.
-						</c:if></td>
+							<td width="8" style="padding-bottom: 3px;"><img src="/images/ct_bot_ttl01.gif" width="4" height="7"></td>
+							<td class="ct_ttl02">
+								<c:if test="${ !empty result }">
+									${userId} 는 사용
+									${ result ? "" : "불" }가능 합니다.
+								</c:if>
+							</td>
 						</tr>
 					</table>
 				</td>

@@ -43,20 +43,22 @@
 	 	FROM ( 	SELECT inner_table.*, ROWNUM AS row_seq
 	 			  	FROM (		SELECT
 									user_id , user_name , email FROM users
-									<if test="searchCondition!=null and searchKeyword!=''">
-										<if test="searchCondition==0">
-											WHERE user_id LIKE #{search.searchKeyword}
+									<where>
+										<if test="search.searchCondition!=null and search.searchKeyword!=''">
+											<if test="search.searchCondition==0">
+												user_id LIKE '%'||#{search.searchKeyword}||'%'
+											</if>
+											<if test="search.searchCondition==1">
+												user_name LIKE '%'||#{search.searchKeyword}||'%'
+											</if>
+											<if test="search.searchCondition==2">
+												user_email LIKE '%'||#{search.searchKeyword}||'%'
+											</if>
 										</if>
-										<if test="searchCondition==1">
-											WHERE user_name LIKE #{search.searchKeyword}
-										</if>
-										<if test="searchCondition==2">
-											WHERE user_email LIKE #{search.searchKeyword}
-										</if>
-									</if>
+									</where>
 									ORDER BY user_id ${sort}  ) inner_table
 		 			WHERE <![CDATA[ROWNUM <= ${search.currentPage*search.pageSize}]]> )
-	 	WHERE row_seq BETWEEN ${(search.currentPage-1)*(search.pageSize+1)} AND ${search.currentPage*search.pageSize}
+	 	WHERE row_seq BETWEEN ${(search.currentPage-1)*search.pageSize+1} AND ${search.currentPage*search.pageSize}
 	</select>
 	
 	<select id="getTotalCount" parameterType="search" resultType="int">
@@ -65,13 +67,13 @@
 					user_id , user_name , email FROM users
 					<if test="searchCondition!=null and searchKeyword!=''">
 						<if test="searchCondition==0">
-							WHERE user_id LIKE #{searchKeyword}
+							WHERE user_id LIKE '%'||#{searchKeyword}||'%'
 						</if>
 						<if test="searchCondition==1">
-							WHERE user_name LIKE #{searchKeyword}
+							WHERE user_name LIKE '%'||#{searchKeyword}||'%'
 						</if>
 						<if test="searchCondition==2">
-							WHERE user_email LIKE #{searchKeyword}
+							WHERE user_email LIKE '%'||#{searchKeyword}||'%'
 						</if>
 					</if>  ) countTable
 	</select>

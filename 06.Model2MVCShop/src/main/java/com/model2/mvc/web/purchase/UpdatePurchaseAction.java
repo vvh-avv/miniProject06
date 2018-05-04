@@ -1,4 +1,4 @@
-package com.model2.mvc.view.purchase;
+package com.model2.mvc.web.purchase;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

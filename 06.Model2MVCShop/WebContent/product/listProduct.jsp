@@ -96,7 +96,7 @@ function stateSubmit(){
 					document.detailForm.action='/updateTranCodeByProd.do?prodNo='+prodNo+'&tranCode=-3';
 					document.detailForm.submit();
 					alert("처리되었습니다.");
-					break;					
+					break;
 				case 2 : //반품거절
 					if(tranCode!=-2) { alert("반품거절처리가 불가합니다."); break; } //유효성 체크
 					document.detailForm.action='/updateTranCodeByProd.do?prodNo='+prodNo+'&tranCode=${sessionScope.tranCodeTemp}';
@@ -283,12 +283,12 @@ function stateSubmit(){
 
 					<tr class="ct_list_pop">
 						<td align="center">
-							<!-- 0420 체크박스 추가 --> <c:if
-								test="${!empty sessionScope.user && user.role=='admin' }">
-								<input type="checkbox" name="prodList"
-									value="${product.prodNo}+${product.proTranCode}">
-							</c:if> <c:if test="${resultPage.currentPage=='1'}"> ${i} </c:if> <c:if
-								test="${resultPage.currentPage!='1'}"> ${(i+resultPage.pageSize*(resultPage.currentPage-1))} </c:if>
+							<!-- 0420 체크박스 추가 -->
+							<c:if test="${!empty sessionScope.user && user.role=='admin' }">
+								<input type="checkbox" name="prodList" value="${product.prodNo}+${product.proTranCode}">
+							</c:if>
+							<c:if test="${resultPage.currentPage=='1'}"> ${i} </c:if>
+							<c:if test="${resultPage.currentPage!='1'}"> ${(i+resultPage.pageSize*(resultPage.currentPage-1))} </c:if>
 						</td>
 						<td></td>
 
@@ -299,16 +299,13 @@ function stateSubmit(){
 						</c:if>
 
 						<td align="left">
-							<!-- 판매중 상품이라면 --> <c:if
-								test="${product.proTranCode=='0' || product.proTranCode=='-1'}">
-								<a
-									href="${param.menu=='manage'?'/updateProductView.do':'/getProduct.do'}?
-													prodNo=${product.prodNo}&menu=${param.menu}&status=0">${product.prodName}</a>
-							</c:if> <!-- 판매중 상품이 아니라면 --> <c:if
-								test="${product.proTranCode!='0' && product.proTranCode!='-1'}">
-								<a
-									href="${param.menu=='manage'?'/updateProductView.do':'/getProduct.do'}?
-													prodNo=${product.prodNo}&menu=${param.menu}">${product.prodName}</a>
+							<!-- 판매중 상품이라면 -->
+							<c:if test="${product.proTranCode=='0' || product.proTranCode=='-1'}">
+								<a href="${param.menu=='manage'?'/updateProductView.do':'/getProduct.do'}?prodNo=${product.prodNo}&menu=${param.menu}&status=0">${product.prodName}</a>
+							</c:if>
+							<!-- 판매중 상품이 아니라면 -->
+							<c:if test="${product.proTranCode!='0' && product.proTranCode!='-1'}">
+								<a href="${param.menu=='manage'?'/updateProductView.do':'/getProduct.do'}?prodNo=${product.prodNo}&menu=${param.menu}">${product.prodName}</a>
 							</c:if>
 
 						</td>
@@ -321,36 +318,35 @@ function stateSubmit(){
 							<!-- 어드민으로 접속했을 경우 --> <c:if
 								test="${!empty user && user.role=='admin'}">
 								<c:choose>
-									<c:when
-										test="${product.proTranCode=='0' || product.proTranCode=='-1'}">
-					판매중
-				</c:when>
+									<c:when test="${product.proTranCode=='0' || product.proTranCode=='-1'}">
+										판매중
+									</c:when>
 									<c:when test="${product.proTranCode=='1'}">
-					구매완료
-				</c:when>
+										구매완료
+									</c:when>
 									<c:when test="${product.proTranCode=='2'}">
-					배송중
-				</c:when>
+										배송중
+									</c:when>
 									<c:when test="${product.proTranCode=='3'}">
-					배송완료
-				</c:when>
+										배송완료
+									</c:when>
 									<c:when test="${product.proTranCode=='-2'}">
-					반품신청					
-				</c:when>
+										반품신청					
+									</c:when>
 									<c:when test="${product.proTranCode=='-3'}">
-					반품완료
-				</c:when>
+										반품완료
+									</c:when>
 								</c:choose>
-							</c:if> <!-- 유저로 접속했을 경우 --> <c:if
-								test="${empty user || user.role=='user'}">
+							</c:if>
+							<!-- 유저로 접속했을 경우 -->
+							<c:if test="${empty user || user.role=='user'}">
 								<c:choose>
-									<c:when
-										test="${product.proTranCode=='0' || product.proTranCode=='-1'}">
-					판매중
-				</c:when>
+									<c:when test="${product.proTranCode=='0' || product.proTranCode=='-1'}">
+										판매중
+									</c:when>
 									<c:when test="${product.proTranCode!='0'}">
-					재고없음
-				</c:when>
+										재고없음
+									</c:when>
 								</c:choose>
 							</c:if>
 
@@ -363,12 +359,12 @@ function stateSubmit(){
 			</table>
 
 			<!-- PageNavigation Start... -->
-			<table width="100%" border="0" cellspacing="0" cellpadding="0"
-				style="margin-top: 10px;">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;">
 				<tr>
-					<td align="center"><input type="hidden" id="currentPage"
-						name="currentPage" value="" /> <jsp:include
-							page="../common/pageNavigator.jsp" /></td>
+					<td align="center">
+						<input type="hidden" id="currentPage" name="currentPage" value="" />
+						<jsp:include page="../common/pageNavigator.jsp" />
+					</td>
 				</tr>
 			</table>
 			<!-- PageNavigation End... -->

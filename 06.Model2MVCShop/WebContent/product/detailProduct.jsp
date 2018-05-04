@@ -3,10 +3,10 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!-- 이걸 안써주면 가끔 상품상세조회로 넘어가야할 때 상품수정으로 넘어감 -->
+<!-- 이걸 안써주면 가끔 상품상세조회로 넘어가야할 때 상품수정으로 넘어감
 <c:if test="${empty product}">
 	<c:set var="product" value="${productVO}" scope="request" />
-</c:if>
+</c:if> -->
 
 <html>
 <head>

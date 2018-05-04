@@ -55,11 +55,12 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/getProduct.do")
-	public String getProduct(@ModelAttribute("product") Product product,
+	public String getProduct(@RequestParam("prodNo") int prodNo, Model model,
 									HttpServletRequest request, HttpServletResponse response) throws Exception{
 		System.out.println("/getProduct.do");
 		
-		productService.getProduct(product.getProdNo());
+		Product product = productService.getProduct(prodNo);
+		model.addAttribute("product", product);
 		
 		//쿠키 추가
 		String history = null;
@@ -75,18 +76,21 @@ public class ProductController {
 		history += "," + product.getProdNo();
 		Cookie cookie = new Cookie("history",history);
 		response.addCookie(cookie);
+	
 		
 		return "forward:/product/detailProduct.jsp";
 	}
 	
 	@RequestMapping("/updateProductView.do")
-	public String updateProductView(@ModelAttribute("product") Product product,
-												@RequestParam(value="status", required=false) String status) throws Exception{
+	public String updateProductView(@ModelAttribute("product") Product product, Model model,
+												@RequestParam(value="status", required=false, defaultValue="") String status) throws Exception{
 		System.out.println("/updateProductView.do");
 		
-		productService.getProduct(product.getProdNo());
+		Product productVO = productService.getProduct(product.getProdNo());
+
+		model.addAttribute("product", productVO);
 		
-		if(status.equals("1")) { //판매중 상품
+		if(status.equals("0")) { //판매중 상품
 			return "forward:/product/updateProduct.jsp";
 		}else {
 			return "forward:/product/detailProduct.jsp";
