@@ -26,11 +26,12 @@ function fncQuitCheck() {
 		alert("사유는 반드시 입력해주시길 바랍니다.");
 	}else{
 		if(chkValue=='기타') { chkValue = document.detailForm.reasonText.value; }
-		alert(chkValue);
 		
-	    //document.detailForm.action='QuitUserAction.do'; //do추가~!
-	    //document.detailForm.submit();
-	    //window.close();
+		document.detailForm.action='/quitUser.do?userId=${user.userId}&reason='+chkValue;
+	    document.detailForm.submit();
+	    
+	    top.opener.location="/user/loginView.jsp"
+	    window.close();
 	    
 	}
 	
@@ -46,12 +47,12 @@ function fncQuitCheck() {
 		<h4>
 			정말 탈퇴하시겠습니까?
 			</h2>
-			탈퇴사유 : <br> <input type="radio" name="reason" value="개인정보 때문에"><font
-				size="2">개인정보 때문에</font><br> <input type="radio" name="reason"
-				value="마음에 드는 상품이 없어서"><font size="2">마음에 드는 상품이 없어서</font><br>
-			<input type="radio" name="reason" value="기타"><font size="2">기타</font>&nbsp;<input
-				type="text" name="reasonText"><br> <br> <input
-				type="button" value="확인" onclick="javascript:fncQuitCheck();">
+			탈퇴사유 : <br>
+			<input type="radio" name="reason" value="개인정보 때문에"><font size="2">개인정보 때문에</font><br>
+			<input type="radio" name="reason" value="마음에 드는 상품이 없어서"><font size="2">마음에 드는 상품이 없어서</font><br>
+			<input type="radio" name="reason" value="기타"><font size="2">기타</font>&nbsp;<input type="text" name="reasonText"><br>
+			<br>
+			<input type="button" value="확인" onclick="javascript:fncQuitCheck();">
 			<input type="button" value="취소" onclick="javascript:window.close();">
 	</form>
 

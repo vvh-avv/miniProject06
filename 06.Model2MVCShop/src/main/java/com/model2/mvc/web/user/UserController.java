@@ -99,12 +99,17 @@ public class UserController {
 	}
 	
 	@RequestMapping("/login.do")
-	public String login(@ModelAttribute("user") User user , HttpSession session ) throws Exception{
+	public String login( @ModelAttribute("user") User user , HttpSession session ) throws Exception{
 		System.out.println("/login.do");
 		
 		User dbUser=userService.getUser(user.getUserId());
 		
-		if( user.getPassword().equals(dbUser.getPassword())){
+		//입력한 회원정보가 없을 때
+		if(dbUser==null) {
+			return "redirect:/user/loginView.jsp";
+		}
+		
+		if( user.getPassword().equals(dbUser.getPassword()) ){
 			session.setAttribute("user", dbUser);
 		}
 		
@@ -156,5 +161,18 @@ public class UserController {
 		model.addAttribute("sort", sort);
 		
 		return "forward:/user/listUser.jsp";
+	}
+	
+	@RequestMapping("/quitUser.do")
+	public String quitUser( @RequestParam("reason") String reason, @RequestParam("userId") String userId ) throws Exception{
+		System.out.println("/quitUser.do");
+		
+		if(reason.contains(",")) {
+			reason = reason.split(",")[0];
+		}
+		userService.quitUser(userId, reason); //탈퇴DB에 insert
+		userService.deleteUser(userId); //회원DB에 delete
+		
+		return "/logout.do";
 	}
 }

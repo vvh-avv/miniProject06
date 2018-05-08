@@ -59,5 +59,13 @@ public class UserServiceImpl implements UserService{
 		}
 		return result;
 	}
+
+	public void quitUser(String userId, String reason) throws Exception {
+		userDao.quitUser(userId, reason);
+	}
+
+	public void deleteUser(String userId) throws Exception {
+		userDao.deleteUser(userId);
+	}
 	
 }

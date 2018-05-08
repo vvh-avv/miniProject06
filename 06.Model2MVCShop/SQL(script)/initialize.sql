@@ -21,9 +21,17 @@ CREATE TABLE users (
 	addr 				VARCHAR2(100),
 	email 				VARCHAR2(50),
 	reg_date 		DATE,
+	quit_flag			VARCHAR2(5) /*Ãß°¡ÇÔ*/
+	reason 			VARCHAR2(50)
 	PRIMARY KEY(user_id)
 );
 
+CREATE TABLE quitUsers (
+	quit_user_id		 VARCHAR2(20) NOT NULL,
+	reason	 VARCHAR2(200),
+	quit_date	 DATE,
+	PRIMARY KEY(quit_user_id)
+)
 
 CREATE TABLE product ( 
 	prod_no 					NUMBER 				NOT NULL,

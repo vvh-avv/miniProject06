@@ -77,6 +77,18 @@
 						</if>
 					</if>  ) countTable
 	</select>
+	
+	
+	<insert id="quitUser" parameterType="map">
+		INSERT
+		INTO quitusers(quit_user_id, reason, quit_date)
+		VALUES( #{userId}, #{reason}, SYSDATE )
+	</insert>
 
+	<delete id="deleteUser" parameterType="String">
+		DELETE
+		FROM users
+		WHERE user_id = #{value}
+	</delete>
 
 </mapper>

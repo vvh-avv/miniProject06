@@ -54,4 +54,19 @@ public class UserDaoImpl implements UserDao{
 		return sqlSession.selectOne("UserMapper.getTotalCount", search);
 	}
 
+	@Override
+	public void deleteUser(String userId) throws Exception {
+		sqlSession.delete("UserMapper.deleteUser", userId);
+	}
+
+	@Override
+	public void quitUser(String userId, String reason) throws Exception {
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		map.put("userId", userId);
+		map.put("reason", reason);
+		
+		sqlSession.insert("UserMapper.quitUser", map);
+	}
+
 }
