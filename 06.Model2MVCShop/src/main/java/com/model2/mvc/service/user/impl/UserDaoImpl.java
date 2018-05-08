@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.model2.mvc.common.Search;
+import com.model2.mvc.service.domain.QuitUser;
 import com.model2.mvc.service.domain.User;
 import com.model2.mvc.service.user.UserDao;
 
@@ -49,24 +50,25 @@ public class UserDaoImpl implements UserDao{
 		return sqlSession.selectList("UserMapper.getUserList", map);
 	}
 
-	// 게시판 Page 처리를 위한 전체 Row(totalCount)  return
 	public int getTotalCount(Search search) throws Exception {
 		return sqlSession.selectOne("UserMapper.getTotalCount", search);
 	}
 
-	@Override
 	public void deleteUser(String userId) throws Exception {
 		sqlSession.delete("UserMapper.deleteUser", userId);
 	}
 
-	@Override
 	public void quitUser(String userId, String reason) throws Exception {
 		Map<String,Object> map = new HashMap<String,Object>();
 		
 		map.put("userId", userId);
 		map.put("reason", reason);
 		
-		sqlSession.insert("UserMapper.quitUser", map);
+		sqlSession.insert("QuitUserMapper.insertUser", map);
+	}
+
+	public List<QuitUser> getQuitUserList() throws Exception {
+		return sqlSession.selectList("QuitUserMapper.getUserList");
 	}
 
 }

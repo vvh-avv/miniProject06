@@ -36,7 +36,6 @@ function fncQuitCheck() {
 	}
 	
 }
-
 -->
 </script>
 </head>

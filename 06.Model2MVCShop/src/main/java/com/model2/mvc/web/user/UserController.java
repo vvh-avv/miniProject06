@@ -1,6 +1,8 @@
 package com.model2.mvc.web.user;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
+import com.model2.mvc.service.domain.QuitUser;
 import com.model2.mvc.service.domain.User;
 import com.model2.mvc.service.user.UserService;
 
@@ -174,5 +177,31 @@ public class UserController {
 		userService.deleteUser(userId); //회원DB에 delete
 		
 		return "/logout.do";
+	}
+	
+	@RequestMapping("/statsUser.do")
+	public String statsUser(Model model) throws Exception{
+		System.out.println("/statsUser.do");
+		
+		Map<String, Object> map = userService.getQuitUserList();
+		//map에 두개가 담겨져 있음
+		//List<QuitUser> user
+		//Map<String, Integer> reason
+		Map<String, Integer> reason = (Map<String, Integer>) map.get("reason");
+		
+		//데이터 가공 후 전달
+		String result = "";
+		Set<String> reasonKeys = reason.keySet();
+
+		for(String key : reasonKeys) {
+			if(result!="") {
+				result += ",";
+			}
+			result += "['"+key+"', "+reason.get(key)+"]";
+		}
+		
+		model.addAttribute("result", result);
+		
+		return "forward:/user/statsUser.jsp";
 	}
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.model2.mvc.common.Search;
+import com.model2.mvc.service.domain.QuitUser;
 import com.model2.mvc.service.domain.User;
 import com.model2.mvc.service.user.UserDao;
 import com.model2.mvc.service.user.UserService;
@@ -66,6 +67,29 @@ public class UserServiceImpl implements UserService{
 
 	public void deleteUser(String userId) throws Exception {
 		userDao.deleteUser(userId);
+	}
+
+	@Override
+	public Map<String,Object> getQuitUserList() throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		List<QuitUser> user = userDao.getQuitUserList();
+		map.put("user", user);
+		
+		Map<String,Integer> reason = new HashMap<String,Integer>(); 
+		for(int i=0; i<user.size(); i++) {
+			String reasonKey = user.get(i).getReason();
+			if(reason.containsKey(reasonKey)) { //map俊 历厘等 reason老 版快
+				int reasonValue = reason.get(reasonKey);
+				reasonValue++;
+				reason.put(reasonKey, reasonValue);
+			}else { //map俊 历厘救等 reason老 版快
+				reason.put(reasonKey, 1);
+			}
+		}
+		map.put("reason", reason);
+		
+		return map;
 	}
 	
 }
